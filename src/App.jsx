@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import Lenis from 'lenis'
+import { lenisSetzen } from './lib/scroll.js'
 import Home from './pages/Home.jsx'
 import Impressum from './pages/Impressum.jsx'
 import Datenschutz from './pages/Datenschutz.jsx'
@@ -16,6 +17,9 @@ function useSmoothScroll() {
     if (reduce || !desktop) return
 
     const lenis = new Lenis({ duration: 1.05, smoothWheel: true })
+    // Damit die Wortmarke in der Leiste weiss, ueber welchen Weg sie
+    // nach oben scrollen muss.
+    lenisSetzen(lenis)
     // Im Dev-Modus greifbar machen: Lenis fängt window.scrollTo ab,
     // sonst lässt sich die Seite weder testen noch debuggen.
     if (import.meta.env.DEV) window.__lenis = lenis
@@ -40,6 +44,7 @@ function useSmoothScroll() {
     return () => {
       document.removeEventListener('click', onClick)
       cancelAnimationFrame(frame)
+      lenisSetzen(null)
       lenis.destroy()
     }
   }, [])

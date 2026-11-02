@@ -1,12 +1,34 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, Phone } from 'lucide-react'
 import { nav, firma } from '../data/content.js'
+import { zumSeitenanfang } from '../lib/scroll.js'
 import Wortmarke from './Wortmarke.jsx'
 
 export default function Nav() {
   const [solid, setSolid] = useState(false)
   const [open, setOpen] = useState(false)
+  const { pathname } = useLocation()
+
+  // Auf der Startseite fuehrt der Router-Link ins Leere: dieselbe Route
+  // bedeutet keine Navigation, also auch kein Scroll. Dort scrollen wir
+  // selbst nach oben. Von Impressum und Datenschutz aus bleibt es eine
+  // echte Navigation, den Rest erledigt ScrollToTop in App.jsx.
+  const aufsLogo = (e) => {
+    if (pathname !== '/') return
+    e.preventDefault()
+
+    if (open) {
+      setOpen(false)
+      // Das offene Menue sperrt body-overflow; solange die Sperre steht,
+      // laeuft ein Scroll ins Leere. Zwei Frames warten, bis der Effekt
+      // sie aufgehoben hat.
+      requestAnimationFrame(() => requestAnimationFrame(zumSeitenanfang))
+      return
+    }
+
+    zumSeitenanfang()
+  }
 
   useEffect(() => {
     // Die Seite ist durchgehend hell, die Leiste braucht deshalb nur noch
@@ -36,7 +58,12 @@ export default function Nav() {
         }`}
       >
         <div className="shell flex h-[68px] items-center justify-between">
-          <Link to="/" aria-label="Zur Startseite" className="tap cursor-pointer">
+          <Link
+            to="/"
+            onClick={aufsLogo}
+            aria-label="Zum Seitenanfang"
+            className="tap cursor-pointer"
+          >
             <Wortmarke />
           </Link>
 
@@ -75,7 +102,17 @@ export default function Nav() {
         aria-hidden={!open}
       >
         <div className="shell flex h-[68px] items-center justify-between">
-          <Wortmarke />
+          {/* Im offenen Menue ist das die sichtbare Wortmarke oben links -
+              sie schliesst das Menue und geht an den Seitenanfang. */}
+          <Link
+            to="/"
+            onClick={aufsLogo}
+            tabIndex={open ? 0 : -1}
+            aria-label="Zum Seitenanfang"
+            className="tap cursor-pointer"
+          >
+            <Wortmarke />
+          </Link>
           <button
             type="button"
             onClick={() => setOpen(false)}
