@@ -1,4 +1,4 @@
-# Schnitzhofer — Stand 16.09.2026 (3. Sitzung: Umstyling auf die echte Marke)
+# Schnitzhofer — Stand 02.11.2026 (4. Sitzung: Deployment + Mobil-Optimierung)
 
 Akquise-Demo für **Schnitzhofer Transporte u. Erdbewegung GmbH**, Döllerhof 110, 5441 Abtenau.
 Alle Inhalte stammen von der Bestandsseite `m.trans-schnitzhofer.at` und von der
@@ -12,6 +12,69 @@ npm run dev     # http://localhost:5173
 npm run build   # grün
 npm run lint    # sauber
 ```
+
+## Live
+
+**https://schnitzhofer.vercel.app** — GitHub `eliasthor05/schnitzhofer-`, Vercel-Team Thor.
+Auto-Deploy bei jedem Push auf `main`.
+
+`vercel.json` traegt den SPA-Rewrite: ohne ihn laufen `/impressum` und `/datenschutz`
+beim Direktaufruf in einen 404, weil der Router im Browser sitzt.
+
+`src/assets/up/` (107 MB 4K-Upscales) ist gitignored — reine Zwischenstufe fuer
+`scripts/build-images.mjs`. Die ausgelieferten WebPs in `src/assets/img/` sind
+versioniert; die Upscales liegen nur lokal.
+
+## Mobil (4. Sitzung)
+
+Auf Touch lief bis dahin die volle Desktop-Maschinerie mit, obwohl dort kaum etwas
+davon zu sehen ist. Schalter fuer alles Folgende ist `src/lib/media.js`
+(`useDesktopEffekte`: ab 1024px **und** feiner Zeiger).
+
+| Abgeschaltet auf Touch | Warum |
+|---|---|
+| **Lenis** | glaettet das Mausrad; auf Touch gibt es keins, es blieb der Dauer-rAF-Loop, der gegen den nativen Momentum-Scroll arbeitet |
+| **Hero-Parallax** | zwei grosse Bilder pro Frame verschoben, auf dem gestapelten Mobil-Layout kaum sichtbar |
+| **Winterdienst-Parallax** | 2560px-Vollbild, das pro Frame **gefiltert und** verschoben wurde |
+| **Cursor-Vorschau (LeistungsIndex)** | war nur per CSS versteckt, lief als Federanimation samt 1600px-Foto trotzdem mit |
+
+Beide Parallax-Stellen stecken jetzt in `src/components/Parallax.jsx`. Bewusst eine
+Komponente statt eines Hooks in der Sektion: `useScroll` haengt damit an ihrer Montage
+und laeuft auf dem Handy gar nicht erst an.
+
+**Ankerspruenge.** Ohne Lenis springt der Browser selbst. Dafuer steht
+`scroll-margin-top: 84px` an `section[id]` in `src/index.css` — sonst verschwindet die
+Sektionsueberschrift unter der 68px-Leiste. Alle fuenf Nav-Anker landen exakt bei 84px.
+
+**Laufband.** `will-change` entfernt: die laufende Transform befoerdert die Ebene
+ohnehin, der Hinweis hielt die 6863px breite Flaeche nur zusaetzlich dauerhaft im
+Speicher. Dazu pausiert es per IntersectionObserver, sobald es aus dem Bild ist.
+
+**Lesbarkeit.** Die Mono-Labels blieben auf dem Handy bei 10,2–10,9px. 22 Stellen auf
+`text-[0.75rem] sm:text-[0.66rem]` o.ae. gehoben — Mobil mindestens 12px, ab `sm`
+zurueck auf den entworfenen Wert. **Nicht wieder auf einen festen Kleinwert
+zurueckdrehen.** Der Kennzahlen-Block steht unter 420px einspaltig; im Zweierraster
+brach "der Vereinbarungen werden eingehalten" sonst ueber vier Zeilen.
+
+### Gemessen bei 375px (gegen die Live-Seite)
+
+| | |
+|---|---|
+| Horizontaler Ueberlauf | **0** |
+| Klickflaechen unter 44px | **0** |
+| Text unter 11,5px | nur das Ampersand der Wortmarke (Logo-Lockup, bleibt) |
+| Eingabefelder unter 16px | **0** — kein iOS-Autozoom |
+| CLS | **0,0023** |
+| JS-Fehler | **0** |
+
+Desktop gegengeprueft: Lenis aktiv, Hero-Parallax gegenlaeufig (−47px / +32px),
+Cursor-Vorschau montiert, Laufband laeuft synchron.
+
+> **Hinweis zur Messmethodik:** Scroll-FPS liessen sich hier *nicht* belastbar messen.
+> Im nicht fokussierten Fenster drosselt Chrome `requestAnimationFrame` auf 1 Hz — die
+> Ausreisser von exakt 1000 ms stammen von der Drosselung, nicht von der Seite. CLS,
+> Ueberlauf, Klickflaechen und Schriftgroessen sind davon unabhaengig und belastbar.
+
 
 ## Die Marke
 
