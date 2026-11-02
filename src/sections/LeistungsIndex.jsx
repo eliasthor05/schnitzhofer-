@@ -3,11 +3,16 @@ import { motion, useReducedMotion, useSpring, useMotionValue } from 'motion/reac
 import Reveal from '../components/Reveal.jsx'
 import { leistungen } from '../data/content.js'
 import { images, alts } from '../data/images.js'
+import { useDesktopEffekte } from '../lib/media.js'
 
 export default function LeistungsIndex() {
   const [hover, setHover] = useState(null)
   const wrapRef = useRef(null)
   const reduce = useReducedMotion()
+  // Das Vorschaubild folgt dem Mauszeiger - auf Touch gibt es keinen.
+  // Es war bisher nur per CSS versteckt, lief als Federanimation samt
+  // 1600px-Foto aber trotzdem mit. Jetzt wird es dort nicht montiert.
+  const zeigergeraet = useDesktopEffekte()
 
   const mx = useMotionValue(0)
   const my = useMotionValue(0)
@@ -80,13 +85,13 @@ export default function LeistungsIndex() {
                     aria-hidden="true"
                     className="absolute left-0 top-0 h-full w-0 bg-accent/10 transition-[width] duration-500 ease-out group-hover:w-full group-focus-visible:w-full"
                   />
-                  <span className="relative z-10 w-8 shrink-0 font-mono text-[0.7rem] text-fg-muted transition-colors duration-300 group-hover:text-accent-deep">
+                  <span className="relative z-10 w-8 shrink-0 font-mono text-[0.75rem] sm:text-[0.7rem] text-fg-muted transition-colors duration-300 group-hover:text-accent-deep">
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <span className="relative z-10 flex-1 font-display text-[clamp(1.25rem,3.4vw,2.6rem)] font-extrabold uppercase leading-tight tracking-tight transition-colors duration-300 group-hover:text-accent-deep">
                     {l.t}
                   </span>
-                  <span className="relative z-10 hidden shrink-0 font-mono text-[0.66rem] uppercase tracking-[0.18em] text-fg-muted sm:block">
+                  <span className="relative z-10 hidden shrink-0 font-mono text-[0.75rem] sm:text-[0.66rem] uppercase tracking-[0.18em] text-fg-muted sm:block">
                     {l.s}
                   </span>
                 </a>
@@ -95,7 +100,7 @@ export default function LeistungsIndex() {
           </ul>
 
           {/* Cursor-Foto – nur auf Zeigegeräten mit feiner Eingabe */}
-          {!reduce && (
+          {!reduce && zeigergeraet && (
             <motion.div
               aria-hidden="true"
               className="pointer-events-none absolute left-0 top-0 z-20 hidden h-[260px] w-[360px] overflow-hidden border border-accent/70 [@media(pointer:fine)]:block"

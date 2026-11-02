@@ -95,7 +95,7 @@ export default function Einsatzgebiet() {
                       strokeWidth={2.4}
                       aria-hidden="true"
                     />
-                    <span className="whitespace-nowrap font-mono text-[0.68rem] uppercase tracking-[0.16em] text-accent-deep">
+                    <span className="whitespace-nowrap font-mono text-[0.75rem] sm:text-[0.68rem] uppercase tracking-[0.16em] text-accent-deep">
                       {o.name}
                     </span>
                   </>
@@ -105,7 +105,7 @@ export default function Einsatzgebiet() {
                       className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent-deep"
                       aria-hidden="true"
                     />
-                    <span className="whitespace-nowrap font-mono text-[0.62rem] uppercase tracking-[0.14em] text-fg-muted">
+                    <span className="whitespace-nowrap font-mono text-[0.72rem] sm:text-[0.62rem] uppercase tracking-[0.14em] text-fg-muted">
                       {o.name}
                     </span>
                   </>
@@ -113,7 +113,7 @@ export default function Einsatzgebiet() {
               </span>
             ))}
 
-            <p className="absolute bottom-3 right-4 font-mono text-[0.66rem] uppercase tracking-[0.16em] text-fg-muted">
+            <p className="absolute bottom-3 right-4 font-mono text-[0.75rem] sm:text-[0.66rem] uppercase tracking-[0.16em] text-fg-muted">
               Schematische Darstellung
             </p>
           </div>

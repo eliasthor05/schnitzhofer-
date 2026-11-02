@@ -12,7 +12,7 @@ export default function Rechtsseite({ titel, children }) {
         <div className="shell">
           <Link
             to="/"
-            className="inline-flex cursor-pointer items-center gap-2 font-mono text-[0.68rem] uppercase tracking-[0.18em] text-fg-muted transition-colors duration-200 hover:text-accent-deep"
+            className="inline-flex cursor-pointer items-center gap-2 font-mono text-[0.75rem] sm:text-[0.68rem] uppercase tracking-[0.18em] text-fg-muted transition-colors duration-200 hover:text-accent-deep"
           >
             <ArrowLeft size={14} aria-hidden="true" />
             Zurück zur Startseite

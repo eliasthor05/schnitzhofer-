@@ -1,22 +1,19 @@
 import { useRef } from 'react'
-import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react'
+import { motion, useReducedMotion } from 'motion/react'
 import { ArrowRight, Phone } from 'lucide-react'
 import { RevealLines } from '../components/Reveal.jsx'
 import { images, alts, illustration } from '../data/images.js'
 import { firma } from '../data/content.js'
+import { useDesktopEffekte } from '../lib/media.js'
+import Parallax from '../components/Parallax.jsx'
 
 export default function Hero() {
   const ref = useRef(null)
   const reduce = useReducedMotion()
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start start', 'end start'],
-  })
-
   // Die Zeichnung faehrt beim Scrollen leicht mit - genug, dass die
-  // Flaeche lebt, wenig genug, dass nichts flimmert.
-  const illuY = useTransform(scrollYProgress, [0, 1], ['0%', '-9%'])
-  const fotoY = useTransform(scrollYProgress, [0, 1], ['0%', '6%'])
+  // Flaeche lebt, wenig genug, dass nichts flimmert. Auf dem Handy
+  // stapeln sich beide Bilder ohnehin, dort traegt der Versatz nichts.
+  const parallax = useDesktopEffekte() && !reduce
 
   const foto = images.erdbewegung
 
@@ -79,36 +76,55 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.95 }}
         >
-          <motion.div style={reduce ? undefined : { y: illuY }}>
-            <img
-              src={illustration.w900}
-              srcSet={`${illustration.w900} 900w, ${illustration.w1800} 1800w`}
-              sizes="(min-width: 1024px) 58vw, 100vw"
-              alt={illustration.alt}
-              width={1800}
-              height={1087}
-              fetchPriority="high"
-              decoding="sync"
-              className="w-full"
-            />
-          </motion.div>
+          {(() => {
+            const zeichnung = (
+              <img
+                src={illustration.w900}
+                srcSet={`${illustration.w900} 900w, ${illustration.w1800} 1800w`}
+                sizes="(min-width: 1024px) 58vw, 100vw"
+                alt={illustration.alt}
+                width={1800}
+                height={1087}
+                fetchPriority="high"
+                decoding="sync"
+                className="w-full"
+              />
+            )
+            const baustellenfoto = (
+              <img
+                src={foto.w1600}
+                srcSet={`${foto.w1600} 1600w, ${foto.w2560} 2560w`}
+                sizes="(min-width: 1024px) 40vw, 100vw"
+                alt={alts.erdbewegung}
+                width={2560}
+                height={1920}
+                loading="eager"
+                decoding="async"
+                className="graded h-full min-h-[240px] w-full object-cover lg:min-h-[340px]"
+              />
+            )
+            const rahmen = 'overflow-hidden rounded-card bg-surface'
 
-          <motion.div
-            className="overflow-hidden rounded-card bg-surface"
-            style={reduce ? undefined : { y: fotoY }}
-          >
-            <img
-              src={foto.w1600}
-              srcSet={`${foto.w1600} 1600w, ${foto.w2560} 2560w`}
-              sizes="(min-width: 1024px) 40vw, 100vw"
-              alt={alts.erdbewegung}
-              width={2560}
-              height={1920}
-              loading="eager"
-              decoding="async"
-              className="graded h-full min-h-[240px] w-full object-cover lg:min-h-[340px]"
-            />
-          </motion.div>
+            if (!parallax) {
+              return (
+                <>
+                  <div>{zeichnung}</div>
+                  <div className={rahmen}>{baustellenfoto}</div>
+                </>
+              )
+            }
+
+            return (
+              <>
+                <Parallax ziel={ref} von="0%" bis="-9%">
+                  {zeichnung}
+                </Parallax>
+                <Parallax ziel={ref} von="0%" bis="6%" className={rahmen}>
+                  {baustellenfoto}
+                </Parallax>
+              </>
+            )
+          })()}
         </motion.div>
       </div>
     </section>

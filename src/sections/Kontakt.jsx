@@ -79,7 +79,7 @@ export default function Kontakt() {
               >
                 <Phone size={18} strokeWidth={2.2} aria-hidden="true" />
                 <span>
-                  <span className="block font-mono text-[0.62rem] uppercase tracking-[0.2em] text-fg-muted">
+                  <span className="block font-mono text-[0.72rem] sm:text-[0.62rem] uppercase tracking-[0.2em] text-fg-muted">
                     Telefon
                   </span>
                   <span className="mt-1 block font-display text-xl font-extrabold">
@@ -94,7 +94,7 @@ export default function Kontakt() {
               >
                 <Mail size={18} strokeWidth={2.2} aria-hidden="true" />
                 <span className="min-w-0">
-                  <span className="block font-mono text-[0.62rem] uppercase tracking-[0.2em] text-fg-muted">
+                  <span className="block font-mono text-[0.72rem] sm:text-[0.62rem] uppercase tracking-[0.2em] text-fg-muted">
                     E-Mail
                   </span>
                   <span className="mt-1 block break-all font-display text-lg font-extrabold">
@@ -106,7 +106,7 @@ export default function Kontakt() {
               <div className="flex items-center gap-4 border-b border-line py-5">
                 <MapPin size={18} strokeWidth={2.2} aria-hidden="true" />
                 <span>
-                  <span className="block font-mono text-[0.62rem] uppercase tracking-[0.2em] text-fg-muted">
+                  <span className="block font-mono text-[0.72rem] sm:text-[0.62rem] uppercase tracking-[0.2em] text-fg-muted">
                     Standort
                   </span>
                   <span className="mt-1 block font-display text-lg font-extrabold">
@@ -145,7 +145,7 @@ export default function Kontakt() {
               <div>
                 <label
                   htmlFor="k-name"
-                  className="mb-2 block font-mono text-[0.66rem] uppercase tracking-[0.18em]"
+                  className="mb-2 block font-mono text-[0.75rem] sm:text-[0.66rem] uppercase tracking-[0.18em]"
                 >
                   Name <span aria-hidden="true">*</span>
                 </label>
@@ -172,7 +172,7 @@ export default function Kontakt() {
                 <div>
                   <label
                     htmlFor="k-tel"
-                    className="mb-2 block font-mono text-[0.66rem] uppercase tracking-[0.18em]"
+                    className="mb-2 block font-mono text-[0.75rem] sm:text-[0.66rem] uppercase tracking-[0.18em]"
                   >
                     Telefon
                   </label>
@@ -199,7 +199,7 @@ export default function Kontakt() {
                 <div>
                   <label
                     htmlFor="k-mail"
-                    className="mb-2 block font-mono text-[0.66rem] uppercase tracking-[0.18em]"
+                    className="mb-2 block font-mono text-[0.75rem] sm:text-[0.66rem] uppercase tracking-[0.18em]"
                   >
                     E-Mail
                   </label>
@@ -227,7 +227,7 @@ export default function Kontakt() {
               <div>
                 <label
                   htmlFor="k-art"
-                  className="mb-2 block font-mono text-[0.66rem] uppercase tracking-[0.18em]"
+                  className="mb-2 block font-mono text-[0.75rem] sm:text-[0.66rem] uppercase tracking-[0.18em]"
                 >
                   Art des Projekts
                 </label>
@@ -250,7 +250,7 @@ export default function Kontakt() {
               <div>
                 <label
                   htmlFor="k-text"
-                  className="mb-2 block font-mono text-[0.66rem] uppercase tracking-[0.18em]"
+                  className="mb-2 block font-mono text-[0.75rem] sm:text-[0.66rem] uppercase tracking-[0.18em]"
                 >
                   Ihr Vorhaben <span aria-hidden="true">*</span>
                 </label>

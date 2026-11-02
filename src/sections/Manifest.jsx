@@ -38,14 +38,16 @@ export default function Manifest() {
         </Reveal>
 
         {/* Kennzahlen */}
-        <div className="mt-20 grid grid-cols-2 gap-px overflow-hidden rounded-card border border-line bg-line lg:grid-cols-4">
+        {/* Unter 420px einspaltig: im Zweierraster brach "der Vereinbarungen
+            werden eingehalten" sonst ueber vier Zeilen. */}
+        <div className="mt-20 grid grid-cols-1 gap-px overflow-hidden rounded-card border border-line bg-line min-[420px]:grid-cols-2 lg:grid-cols-4">
           {kennzahlen.map((k, i) => (
             <Reveal key={k.label} delay={0.06 * i} className="bg-bg">
               <div className="p-6 sm:p-8">
                 <p className="font-display text-[clamp(2.5rem,6vw,4.5rem)] font-extrabold leading-none text-accent-deep">
                   <CountUp to={k.wert} suffix={k.suffix} />
                 </p>
-                <p className="mt-4 font-mono text-[0.68rem] uppercase leading-relaxed tracking-[0.14em] text-fg-muted">
+                <p className="mt-4 font-mono text-[0.75rem] sm:text-[0.68rem] uppercase leading-relaxed tracking-[0.14em] text-fg-muted">
                   {k.label}
                 </p>
               </div>

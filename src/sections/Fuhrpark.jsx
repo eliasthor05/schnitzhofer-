@@ -29,7 +29,7 @@ export default function Fuhrpark() {
           {fuhrpark.map((f, i) => (
             <Reveal key={f.titel} delay={0.05 * i} className="bg-bg">
               <div className="group h-full p-7 transition-colors duration-300 hover:bg-accent-soft sm:p-9">
-                <p className="font-mono text-[0.68rem] text-fg-muted">
+                <p className="font-mono text-[0.75rem] sm:text-[0.68rem] text-fg-muted">
                   {String(i + 1).padStart(2, '0')}
                 </p>
                 <h3 className="mt-5 font-display text-2xl font-extrabold uppercase transition-colors duration-300 group-hover:text-accent-deep">
@@ -47,7 +47,7 @@ export default function Fuhrpark() {
           {/* Abschlusskachel */}
           <Reveal delay={0.25} className="bg-accent-soft text-fg">
             <div className="flex h-full flex-col justify-between p-7 sm:p-9">
-              <p className="font-mono text-[0.68rem] uppercase tracking-[0.18em]">
+              <p className="font-mono text-[0.75rem] sm:text-[0.68rem] uppercase tracking-[0.18em]">
                 Preis-Leistung
               </p>
               <p className="mt-8 font-display text-xl font-extrabold uppercase leading-tight">

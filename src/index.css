@@ -18,6 +18,14 @@
     scroll-behavior: smooth;
   }
 
+  /* Ohne Lenis (Touch, reduzierte Bewegung) springt der Browser selbst an
+     die Anker. Die Leiste ist 68px hoch und liegt fix darueber - ohne
+     diesen Abstand verschwindet die Sektionsueberschrift darunter. */
+  section[id],
+  [id='inhalt'] {
+    scroll-margin-top: 84px;
+  }
+
   body {
     @apply bg-bg text-fg font-sans antialiased;
     font-size: 17px;

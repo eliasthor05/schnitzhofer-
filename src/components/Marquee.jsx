@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import { useReducedMotion } from 'motion/react'
 
 /**
@@ -7,6 +8,23 @@ import { useReducedMotion } from 'motion/react'
  */
 export default function Marquee({ items, speed = 46 }) {
   const reduce = useReducedMotion()
+  const bandRef = useRef(null)
+  const [sichtbar, setSichtbar] = useState(false)
+
+  // Das Band ist ein paar tausend Pixel breit. Laeuft es weiter, waehrend
+  // es ausserhalb des Bildes liegt, haelt es den Compositor und damit den
+  // Akku wach - auf dem Handy der teuerste Dauerlaeufer der Seite.
+  useEffect(() => {
+    const el = bandRef.current
+    if (!el) return
+
+    const io = new IntersectionObserver(
+      (eintraege) => setSichtbar(eintraege.some((e) => e.isIntersecting)),
+      { rootMargin: '120px 0px' }
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
 
   if (reduce) {
     return (
@@ -27,8 +45,15 @@ export default function Marquee({ items, speed = 46 }) {
   return (
     <div className="relative overflow-hidden bg-accent py-8 sm:py-11">
       <div
-        className="flex w-max gap-10 will-change-transform sm:gap-14"
-        style={{ animation: `marquee ${speed}s linear infinite` }}
+        ref={bandRef}
+        className="flex w-max gap-10 sm:gap-14"
+        style={{
+          animation: `marquee ${speed}s linear infinite`,
+          // Kein will-change: die laufende Transform befoerdert die Ebene
+          // ohnehin: der Hinweis haette sie nur zusaetzlich dauerhaft im
+          // Speicher gehalten - bei dieser Breite ein spuerbarer Posten.
+          animationPlayState: sichtbar ? 'running' : 'paused',
+        }}
       >
         {row.map((it, i) => (
           <span

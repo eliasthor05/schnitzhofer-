@@ -81,11 +81,11 @@ export default function Referenzen() {
                 <span className="block font-display text-lg font-extrabold uppercase leading-tight">
                   {r.titel}
                 </span>
-                <span className="mt-1 block font-mono text-[0.66rem] uppercase tracking-[0.16em] text-fg-muted">
+                <span className="mt-1 block font-mono text-[0.75rem] sm:text-[0.66rem] uppercase tracking-[0.16em] text-fg-muted">
                   {r.ort}
                 </span>
               </span>
-              <span className="font-mono text-[0.66rem] text-fg-muted">
+              <span className="font-mono text-[0.75rem] sm:text-[0.66rem] text-fg-muted">
                 {String(i + 1).padStart(2, '0')}
               </span>
             </figcaption>

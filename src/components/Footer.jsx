@@ -61,7 +61,7 @@ export default function Footer() {
               </Link>
             </li>
           </ul>
-          <p className="mt-6 font-mono text-[0.68rem] leading-relaxed text-white/60">
+          <p className="mt-6 font-mono text-[0.75rem] sm:text-[0.68rem] leading-relaxed text-white/60">
             UID {firma.uid}
             <br />
             FN {firma.fnr}
@@ -70,7 +70,7 @@ export default function Footer() {
       </div>
 
       <div className="hair-t-dark">
-        <div className="shell flex flex-col gap-3 py-6 font-mono text-[0.66rem] uppercase tracking-[0.18em] text-white/60 sm:flex-row sm:items-center sm:justify-between">
+        <div className="shell flex flex-col gap-3 py-6 font-mono text-[0.75rem] sm:text-[0.66rem] uppercase tracking-[0.18em] text-white/60 sm:flex-row sm:items-center sm:justify-between">
           <span>
             © {new Date().getFullYear()} {firma.name}
           </span>

@@ -8,7 +8,12 @@ import Datenschutz from './pages/Datenschutz.jsx'
 function useSmoothScroll() {
   useEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduce) return
+    // Lenis glaettet das Mausrad. Auf Touch gibt es kein Rad: dort bliebe
+    // nur der Dauer-rAF-Loop, der sich mit dem nativen Momentum-Scroll
+    // beisst. Anker-Sprünge uebernimmt dann scroll-behavior aus der CSS,
+    // die Kopfzeilenhoehe steht als scroll-margin-top an den Sektionen.
+    const desktop = window.matchMedia('(min-width: 1024px) and (pointer: fine)').matches
+    if (reduce || !desktop) return
 
     const lenis = new Lenis({ duration: 1.05, smoothWheel: true })
     // Im Dev-Modus greifbar machen: Lenis fängt window.scrollTo ab,
