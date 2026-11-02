@@ -1,0 +1,7 @@
+node_modules
+dist
+.DS_Store
+
+# 4K-Upscales: reine Zwischenstufe fuer scripts/build-images.mjs (107 MB).
+# Die ausgelieferten WebP-Derivate liegen in src/assets/img/ und sind versioniert.
+src/assets/up
